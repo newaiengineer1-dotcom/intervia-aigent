@@ -19,9 +19,9 @@ def test_clamp():
 
 
 def test_strategy_with_categories_and_time():
-    plan = StrategyAgent().plan([], "Mixed", "30 Minutes", {}, categories=["Behavioral & Situational 🎭"], remaining_minutes=29.5, target_questions=8)
+    plan = StrategyAgent().plan([], "Mixed", "30 Minutes", {}, categories=["Behavioral & Situational"], remaining_minutes=29.5, target_questions=8)
     assert plan["focus"]
-    assert plan["categories"] == ["Behavioral & Situational 🎭"]
+    assert plan["categories"] == ["Behavioral & Situational"]
     assert plan["target_questions"] == 8
 
 
@@ -42,7 +42,7 @@ def test_complete_report_builders():
     evidence = EvidenceAgent().build("Email test@example.com\nExperience in Python.", "Python required.", "AI Engineer")
     turns = [{
         "question": "Tell me about Python.",
-        "category": "Technical & Role-Specific 💻",
+        "category": "Technical & Role-Specific",
         "answer": "I built Python applications.",
         "answer_mode": "text",
         "elapsed_seconds": 20,
@@ -56,7 +56,7 @@ def test_complete_report_builders():
             "next_improvement": "Add measurable impact.",
         },
     }]
-    md = build_markdown_report("AI Engineer", "Not specified", "Mixed", turns, evidence, company="Example", categories=["Technical & Role-Specific 💻"])
-    pdf = build_pdf_report("AI Engineer", "Not specified", "Mixed", turns, evidence, company="Example", categories=["Technical & Role-Specific 💻"])
+    md = build_markdown_report("AI Engineer", "Not specified", "Mixed", turns, evidence, company="Example", categories=["Technical & Role-Specific"])
+    pdf = build_pdf_report("AI Engineer", "Not specified", "Mixed", turns, evidence, company="Example", categories=["Technical & Role-Specific"])
     assert "ATS-readiness estimate" in md
     assert pdf.startswith(b"%PDF")

@@ -43,7 +43,7 @@ def test_report_contains_complete_output_sections():
 
 def test_session_snapshot_and_report_export_contracts():
     assert "build_session_snapshot" in APP
-    assert '<h3>📊</h3>' in APP
+    assert "<h3>Session insights</h3>" in APP
     assert "session_snapshot=snapshot" in APP
     assert "Executive session snapshot" in REPORT
     assert "ATS risk flags" in REPORT
@@ -55,21 +55,17 @@ def test_ats_value_additions_contract():
         assert token in evidence
 
 
-def test_icon_first_command_deck_and_telemetry_contract():
+def test_clean_command_deck_and_telemetry_contract():
     for token in [
         "ix-command",
         "render_command_deck",
         "render_session_telemetry",
-        "🎙️",
-        "🧬",
-        "🧠",
-        "📊",
-        "📑",
-        'st.markdown("#### 📈")',
-        'st.markdown("#### 🗺️")',
+        "Candidate evidence",
+        "Session report",
         "report_completeness",
     ]:
         assert token in APP
+
 
 
 def test_snapshot_extended_analytics_contract():
@@ -107,6 +103,16 @@ def test_start_interview_cannot_leave_blank_question_contract():
     ]:
         assert token in APP
 
-def test_icon_first_dashboard_contract():
-    for token in ['"🔐"', '"🎯"', '"🏢"', '"⏱️"', '"🔊"', '"🎙️"', '"🔎"', '"📷"', '"🗣️"', 'st.tabs(["🎛️", "🆕"])']:
+def test_clean_dashboard_contract():
+    assert 'st.tabs(' not in APP
+    for token in [
+        '"Groq API key"',
+        '"Target role"',
+        '"Company / employer (optional)"',
+        '"Session duration"',
+        '"Question format"',
+        '"Answer format"',
+        '"Interview categories"',
+        '"New interview session"',
+    ]:
         assert token in APP
