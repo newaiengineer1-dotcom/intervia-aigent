@@ -50,7 +50,7 @@ checks = {
     "automatic_model_discovery": "models.list()" in (ROOT / "agent_modules" / "groq_gateway.py").read_text(encoding="utf-8"),
     "dashboard_reset": "reset_interview_session" in app and 'reset_dashboard_button' in app,
     "start_resilience": "deterministic_first_question" in app and "st.session_state.degraded_mode" in app and "GroqGateway.friendly_error" in app,
-    "exact_streamlit_theme": all(token in (ROOT / ".streamlit" / "config.toml").read_text(encoding="utf-8") for token in ['base = "dark"', 'primaryColor = "#67E8F9"', 'backgroundColor = "#060A12"', 'secondaryBackgroundColor = "#0B1220"', 'textColor = "#F1F5F9"']),
+    "exact_streamlit_theme": all(token in (ROOT / ".streamlit" / "config.toml").read_text(encoding="utf-8") for token in ['base = "dark"', 'primaryColor = "#22D3EE"', 'backgroundColor = "#030A16"', 'secondaryBackgroundColor = "#061B34"', 'textColor = "#F4F8FF"']),
     "ats_resume_check": "ATS Readiness" in app and "ats_readiness" in (ROOT / "agent_modules" / "evidence_agent.py").read_text(encoding="utf-8"),
     "complete_pdf_report": "report_kwargs" in app and "Suggested better answer" in (ROOT / "report.py").read_text(encoding="utf-8") and "Session configuration" in (ROOT / "report.py").read_text(encoding="utf-8"),
     "premium_dashboard_layer": "Ultra-premium visual layer" in app and "ats-banner" in app,
