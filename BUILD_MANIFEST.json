@@ -1,36 +1,34 @@
 {
   "project": "Intervia AI — Interview Intelligence Platform",
-  "release_date": "2026-10-02",
+  "release_date": "2026-10-14",
   "python": "3.12",
   "architecture": "Streamlit + modular multi-agent Groq gateway",
   "ui": {
-    "combined_interview_setup_tab": "Interview categories and Interview mode",
+    "combined_interview_setup_panel": true,
     "industry_ui_removed": true,
-    "premium_dark_dashboard": true,
-    "new_interview_session_tab": true,
-    "professional_dashboard_reset": true,
+    "ultra_luxury_obsidian_sapphire_theme": true,
+    "single_reset_control": true,
     "reset_preserves_groq_secret": true,
-    "ultra_hd_theme_palette": "#030712 → #111827",
+    "theme_palette": {
+      "background": "#060A12",
+      "sidebar": "#0B1220",
+      "primary": "#67E8F9",
+      "text": "#F1F5F9"
+    },
     "glassmorphism_cards": true,
-    "neon_purple_cyan_glows": true,
     "animated_waveform": true,
     "adaptive_progress_stepper": true,
-    "ai_avatar_status_pulse": true,
     "filler_word_highlighting": true,
     "speech_analytics_chart": true,
     "responsive_dashboard_layout": true,
-    "smooth_css_stage_transitions": true,
-    "icon_first_command_deck": true,
-    "icon_first_sidebar_tabs": true,
+    "textual_navigation_without_decorative_icons": true,
+    "labeled_inputs_and_controls": true,
+    "single_setup_panel_without_tabs": true,
     "session_telemetry_tiles": true,
     "performance_trajectory_chart": true,
     "dimension_readiness_chart": true,
-    "question_map": true,
     "report_completeness_indicator": true,
     "coaching_priority_surface": true,
-    "primary_accent": "#9D7CFF",
-    "text_color": "#F9FAFB",
-    "icon_first_inputs": true,
     "persistent_live_session_surface": true
   },
   "agents": [
@@ -56,7 +54,6 @@
     "ats_parseability_signal",
     "complete_report_snapshot_coverage",
     "pytest_root_path_validation",
-    "icon_first_command_deck",
     "session_telemetry_tiles",
     "performance_trajectory_chart",
     "dimension_readiness_chart",
@@ -65,12 +62,16 @@
     "coaching_priority_surface",
     "extended_snapshot_reporting",
     "exact_streamlit_theme_palette",
-    "icon_only_input_controls",
     "session_start_resilience_fallback",
     "reduced_interviewer_prompt_payload",
-    "persistent_live_question_surface"
+    "persistent_live_question_surface",
+    "clean_textual_navigation",
+    "single_setup_panel_no_tabs",
+    "deduplicated_reset_control",
+    "descriptive_input_labels",
+    "luxury_obsidian_sapphire_theme"
   ],
-  "validation": "verify_project.py + py_compile + pytest (17 tests) + deterministic fallback/session-start/theme/report smoke tests + ZIP integrity",
+  "validation": "verify_project.py + py_compile + pytest (17 tests) + report/PDF smoke tests + ZIP integrity",
   "runtime_validation_note": "External dependency installation and real Groq/Streamlit Cloud execution require network access and a real project API key.",
   "validation_details": {
     "static_compilation": "PASS",
@@ -78,10 +79,9 @@
     "pytest": "17 passed",
     "report_smoke": "PASS",
     "package_integrity": "PASS",
-    "live_groq_streamlit_execution": "NOT_RUN_IN_BUILD_SANDBOX",
-    "functional_smoke": "PASS",
-    "session_start_resilience": "PASS",
-    "exact_streamlit_theme": "PASS"
+    "dependency_imports": "NOT RUN: Streamlit and Groq are not installed in build sandbox",
+    "live_groq_streamlit_execution": "NOT RUN: requires external dependencies, a real API key, network access, and browser permissions",
+    "ui_visual_browser_test": "NOT RUN: no live browser session in build sandbox"
   },
-  "release_focus": "Stable session-start flow + icon-first Ultra-HD cockpit + exact dark theme + session intelligence"
+  "release_focus": "2026-10-14: luxury theme, clean textual controls, no setup tabs, one reset control, preserved interview functionality"
 }

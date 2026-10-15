@@ -158,3 +158,13 @@ The verifier checks:
 ## Important runtime note
 
 Static validation cannot prove that a particular Groq key will receive access to a particular model. Groq project permissions, quotas, network access, and API availability are runtime conditions. The application therefore discovers available models and presents a friendly error instead of exposing raw API traces.
+
+
+## Release notes — 14 October 2026
+
+- Ultra Luxury Obsidian + Sapphire theme (`#060A12` background, `#0B1220` secondary surfaces, `#67E8F9` accent).
+- One labeled interview setup panel; removed the unnecessary setup tabs.
+- Consolidated duplicate reset actions into one dashboard action.
+- Replaced icon-only controls with descriptive text labels.
+- Preserved interview preparation, CV/JD evidence, ATS readiness, text/audio questions, typed/spoken answers, coaching, analytics, and report exports.
+- Validation: 17 automated tests pass, project verifier passes, and Python syntax compilation passes. Live Streamlit/Groq execution was not possible in the build sandbox.

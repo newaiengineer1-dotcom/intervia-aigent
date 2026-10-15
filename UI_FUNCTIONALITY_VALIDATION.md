@@ -1,4 +1,4 @@
-# Intervia AI — UI Functionality Validation Matrix
+# Intervia AI — UI Functionality Validation Matrix (2026-10-14)
 
 This release was reviewed against the prior Intervia requirements and the supplied cockpit screenshot theme.
 
@@ -22,7 +22,7 @@ This release was reviewed against the prior Intervia requirements and the suppli
 | Job Description upload | `jd` | JD requirements + ATS keyword alignment |
 | JD paste | `jd_text_input` | Alternate JD input |
 | Company-specific context | `company_track_input` | Optional context passed to analysis/report |
-| Reset confirmation | `confirm_reset_input` | Enables destructive session reset |
+| Dashboard reset action | `reset_dashboard_button` | Clears the active session and preserves the API key |
 | Typed answer | `answer_input_<turn>` | Coaching + scores + next adaptive question |
 | Voice answer | `answer_audio_<turn>` | Whisper transcription + speech metrics + coaching |
 | Camera snapshot | `camera_<turn>` | Presentation cues only |
@@ -44,3 +44,11 @@ The final CSS layer explicitly styles text inputs, text areas, selectboxes, mult
 ## Runtime limitation
 
 Static compilation, AST/project checks, deterministic regression tests, report/PDF smoke tests and ZIP integrity can be validated in the build environment. Live Groq, Whisper, browser microphone, camera and Streamlit Cloud behavior still require deployment with a valid Groq key, network access and browser permissions.
+
+## Clean UI changes (2026-10-14)
+
+- Interview setup is one continuous sidebar panel; no setup tabs remain.
+- A single dashboard reset button replaces duplicate reset controls and confirmation widgets.
+- Inputs and action buttons use descriptive labels instead of emoji-only labels.
+- The luxury Obsidian + Sapphire theme remains configured in `.streamlit/config.toml`.
+- Automated regression tests and project verification pass. Live browser rendering and live Groq calls require deployment dependencies and a valid API key and were not performed in the build sandbox.

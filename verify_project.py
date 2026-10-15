@@ -31,14 +31,14 @@ app = (ROOT / "app.py").read_text(encoding="utf-8")
 agent_facade = (ROOT / "agents.py").read_text(encoding="utf-8")
 
 checks = {
-    "combined_setup_tab": 'st.tabs(["🎛️", "🆕"])' in app and 'mode_map' in app and 'category_map' in app,
-    "new_interview_tab": 'reset_sidebar_button' in app and 'reset_interview_session' in app and '🆕' in app,
-    "seven_categories": "Behavioral & Situational 🎭" in app and "Reverse Interviewing" in app,
+    "clean_single_setup_panel": 'st.tabs(' not in app and 'mode_map' in app and 'category_map' in app,
+    "single_reset_control": 'reset_dashboard_button' in app and 'reset_interview_session' in app and 'reset_sidebar_button' not in app,
+    "seven_categories": "Behavioral & Situational" in app and "Reverse Interviewing" in app,
     "no_industry_input": 'st.text_input("Industry"' not in app,
     "no_raw_exception_code": "st.code(str(exc)" not in app,
     "no_raw_exception_fstrings": "{exc}" not in app,
-    "text_answer_mode": "⌨️ Type Answers" in app,
-    "voice_answer_mode": "🎙️ Speak Answers" in app,
+    "text_answer_mode": "Type Answers" in app,
+    "voice_answer_mode": "Speak Answers" in app,
     "audio_questions": "Audio Questions" in app,
     "whisper_transcription": "gateway.transcribe" in app,
     "adaptive_target": "question_target" in app,
@@ -55,6 +55,8 @@ checks = {
     "complete_pdf_report": "report_kwargs" in app and "Suggested better answer" in (ROOT / "report.py").read_text(encoding="utf-8") and "Session configuration" in (ROOT / "report.py").read_text(encoding="utf-8"),
     "premium_dashboard_layer": "Ultra-premium visual layer" in app and "ats-banner" in app,
     "uhd_theme_palette": "#070B16" in app and "#111827" in app and "backdrop-filter:blur" in app,
+    "clean_input_labels": all(label in app for label in ['"Groq API key"', '"Target role"', '"Interview mode"', '"Interview categories"']),
+    "no_icon_only_controls": all(label not in app for label in ['st.button("🚀"', 'st.button("↻"', 'st.tabs(']),
     "neon_glow_effects": "uhdWave" in app and "uhdPulse" in app,
     "animated_waveform": "uhd-wave" in app and "@keyframes uhdWave" in app,
     "adaptive_stepper": "uhd-stepper" in app and "Adaptive Q&A" in app,

@@ -1,10 +1,10 @@
-# Intervia Verification Report — Integrated Ultra-HD Release
+# Intervia Verification Report — Ultra Luxury Clean UI Release
 
-Release date: 2026-10-02
+Release date: 2026-10-14
 
 ## Scope reviewed
 
-This release was reviewed against the prior Intervia requirements carried forward through the conversation: modular Groq agents, automatic model discovery, combined Interview categories and Interview mode setup, no Industry UI, text/voice modalities, adaptive pacing, candidate/JD evidence separation, ATS resume readiness analysis, professional New Interview reset, premium screenshot-inspired dashboard, speech visualization/highlighting, and complete session PDF reporting.
+This release was reviewed against the prior Intervia requirements carried forward through the conversation: modular Groq agents, automatic model discovery, single-panel Interview categories and Interview mode setup, no Industry UI, text/voice modalities, adaptive pacing, candidate/JD evidence separation, ATS resume readiness analysis, single New Interview reset control, luxury Obsidian + Sapphire dashboard, speech visualization/highlighting, and complete session PDF reporting.
 
 ## Validation results
 
@@ -35,10 +35,19 @@ The package does not claim that static tests can guarantee external API availabi
 
 ## Session-start reliability hotfix — final UI release
 
-- Exact Streamlit theme verified: `#030712` background, `#111827` secondary background, `#9D7CFF` primary, `#F9FAFB` text, dark base.
+- Exact Streamlit theme verified: `#060A12` background, `#0B1220` secondary background, `#67E8F9` primary, `#F1F5F9` text, dark base.
 - First-question generation is now inside the same guarded startup path as model discovery.
 - A transient Groq/model failure cannot leave `question` empty: a deterministic role-grounded first question is stored and the session is explicitly marked `LOCAL FALLBACK`.
 - Next-question failures preserve continuity using the same deterministic fallback instead of clearing the current question.
 - Interviewer prompt payloads were reduced to lower token pressure and improve resilience to Groq TPM limits.
-- Icon-first inputs and dashboard headings were regression-checked.
+- Decorative icon/emoji-only controls were replaced with descriptive text labels. The setup tabs were removed, and duplicate reset controls were consolidated into one dashboard action.
 - Final regression suite: **17 passed**.
+
+## 2026-10-14 clean UI update
+
+- Removed the two sidebar setup tabs and consolidated their contents into a single labeled setup panel.
+- Removed the duplicate sidebar reset action; the dashboard retains one clearly labeled New interview session action.
+- Replaced icon-only input and action labels with descriptive text labels.
+- Preserved interview modes, seven categories, duration choices, text/audio questions, typed/spoken answers, research, camera snapshot, ATS/evidence analysis, coaching, and report generation.
+- Automated checks: `pytest -q` **17 passed**; `python verify_project.py` **PASS**; Python syntax compilation **PASS**; ZIP integrity **PASS**.
+- Limitation: Streamlit and Groq are not installed in the build sandbox, so live Streamlit browser and Groq API execution were not run.

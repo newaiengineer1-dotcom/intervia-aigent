@@ -24,19 +24,18 @@ from utils import extract_uploaded_text, safe_clamp
 
 st.set_page_config(
     page_title="Intervia AI — Interview Intelligence Platform",
-    page_icon="🎯",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 CATEGORIES = [
-    "Behavioral & Situational 🎭",
-    "Technical & Role-Specific 💻",
-    "HR & Screening Basics 🤝",
-    "Leadership & Management 👔",
-    "Case & Analytical Interviews 📊",
-    "Competency & Skill-Based 🧠",
-    "Reverse Interviewing — Questions for the Employer 🔍",
+    "Behavioral & Situational",
+    "Technical & Role-Specific",
+    "HR & Screening Basics",
+    "Leadership & Management",
+    "Case & Analytical Interviews",
+    "Competency & Skill-Based",
+    "Reverse Interviewing — Questions for the Employer",
 ]
 DURATIONS = {"30 Minutes": 30, "60 Minutes": 60, "120 Minutes": 120, "180 Minutes": 180}
 TARGET_QUESTIONS = {30: 8, 60: 15, 120: 28, 180: 40}
@@ -769,9 +768,9 @@ def render_speech_controls(text: str, key: str, title: str, language: str, autop
     components.html(
         f"""
         <div style="font-family:Arial,sans-serif;padding:8px 0;">
-          <div style="color:#91a2c0;font-size:12px;font-weight:700;margin-bottom:7px;">🔊 {escape(title)}</div>
-          <button id="play_{safe_key}" style="border:1px solid #33466f;background:#151f3b;color:#fff;border-radius:10px;padding:9px 14px;cursor:pointer;margin-right:6px;">▶ Play</button>
-          <button id="stop_{safe_key}" style="border:1px solid #33466f;background:#0d1830;color:#c9d4ea;border-radius:10px;padding:9px 14px;cursor:pointer;">■ Stop</button>
+          <div style="color:#91a2c0;font-size:12px;font-weight:700;margin-bottom:7px;">{escape(title)}</div>
+          <button id="play_{safe_key}" style="border:1px solid #33466f;background:#151f3b;color:#fff;border-radius:10px;padding:9px 14px;cursor:pointer;margin-right:6px;">Play</button>
+          <button id="stop_{safe_key}" style="border:1px solid #33466f;background:#0d1830;color:#c9d4ea;border-radius:10px;padding:9px 14px;cursor:pointer;">Stop</button>
           <span id="status_{safe_key}" style="color:#91a2c0;font-size:12px;margin-left:8px;"></span>
         </div>
         <script>
@@ -893,7 +892,7 @@ def render_ultra_topbar(model_label: str, started: bool, session_id: str):
     state = "LIVE SESSION" if started else "READY WORKSPACE"
     dot = '<span class="uhd-pulse"></span>' if started else '<span style="width:7px;height:7px;border-radius:50%;background:#8fa1c9;display:inline-block"></span>'
     st.markdown(
-        f'''<div class="uhd-topbar"><div class="uhd-brand"><span class="uhd-avatar">✦</span><span>INTERVIA AI <small style="color:#7edfff;display:block;font-size:8px;letter-spacing:.18em">STUDIO COCKPIT</small></span></div><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="uhd-pill">SESSION · {escape((session_id or "--------")[:8])}</span><span class="uhd-pill">MODEL · {escape(model_label)}</span><span class="uhd-pill live">{dot}{state}</span></div></div>''',
+        f'''<div class="uhd-topbar"><div class="uhd-brand"><span class="uhd-avatar">IA</span><span>INTERVIA AI <small style="color:#7edfff;display:block;font-size:8px;letter-spacing:.18em">STUDIO COCKPIT</small></span></div><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="uhd-pill">SESSION · {escape((session_id or "--------")[:8])}</span><span class="uhd-pill">MODEL · {escape(model_label)}</span><span class="uhd-pill live">{dot}{state}</span></div></div>''',
         unsafe_allow_html=True,
     )
 
@@ -901,15 +900,15 @@ def render_ultra_topbar(model_label: str, started: bool, session_id: str):
 def render_command_deck():
     """Icon-first in-page navigation. Links are visual/navigation only and never alter session state."""
     items = [
-        ("🎙️", "Live", "#live-studio"),
-        ("🧬", "Evidence", "#evidence-lab"),
-        ("🧠", "Coach", "#live-coaching"),
-        ("📊", "Insights", "#session-insights"),
-        ("📑", "Report", "#session-report"),
+        ("Live interview", "Live", "#live-studio"),
+        ("Candidate evidence", "Evidence", "#evidence-lab"),
+        ("Live coaching", "Coach", "#live-coaching"),
+        ("Session insights", "Insights", "#session-insights"),
+        ("Session report", "Report", "#session-report"),
     ]
     html = '<nav class="ix-command" aria-label="Intervia Studio navigation">'
-    for icon, label, href in items:
-        html += f'<a href="{href}"><span class="ix-icon">{icon}</span><span class="ix-label">{label}</span></a>'
+    for label, short_label, href in items:
+        html += f'<a href="{href}"><span class="ix-label">{label}</span></a>'
     html += '</nav>'
     st.markdown(html, unsafe_allow_html=True)
 
@@ -920,15 +919,15 @@ def render_session_telemetry(evidence: dict | None, turns: list[dict], started: 
     autosave = "SYNCED" if turns else ("READY" if evidence else "WAITING")
     model_short = (model_label or "AUTO").replace("openai/", "")
     cards = [
-        ("🧬", "EVIDENCE", "READY" if evidence else "WAITING", "CV + JD grounding"),
-        ("⚡", "ENGINE", "LIVE" if started else "READY", model_short[:24]),
-        ("💾", "AUTOSAVE", autosave, "Session state"),
-        ("🎙️", "VOICE", str(voice_count), "Voice answers"),
-        ("🧾", "ATS", f"{ats.get('score', 0)}/100", "Readiness estimate"),
+        ("Candidate evidence", "EVIDENCE", "READY" if evidence else "WAITING", "CV + JD grounding"),
+        ("ENGINE", "ENGINE", "LIVE" if started else "READY", model_short[:24]),
+        ("AUTOSAVE", "AUTOSAVE", autosave, "Session state"),
+        ("VOICE", "VOICE", str(voice_count), "Voice answers"),
+        ("ATS", "ATS", f"{ats.get('score', 0)}/100", "Readiness estimate"),
     ]
     cols = st.columns(5)
     for col, (icon, key, value, sub) in zip(cols, cards):
-        col.markdown(f'<div class="ix-tile"><div class="k">{icon} {key}</div><div class="v">{escape(value)}</div><div class="s">{escape(sub)}</div></div>', unsafe_allow_html=True)
+        col.markdown(f'<div class="ix-tile"><div class="k">{key}</div><div class="v">{escape(value)}</div><div class="s">{escape(sub)}</div></div>', unsafe_allow_html=True)
 
 
 def render_quality_insights(turns: list[dict]):
@@ -945,10 +944,10 @@ def render_quality_insights(turns: list[dict]):
     trend = {"Question": list(range(1, len(values) + 1)), "Overall": [round(v, 1) for v in values]}
     left, right = st.columns([1.15, 1])
     with left:
-        st.markdown("#### 📈")
+        st.markdown("#### Performance overview")
         st.line_chart(trend, x="Question", y="Overall", height=220)
     with right:
-        st.markdown("#### 🎯")
+        st.markdown("#### Readiness overview")
         dim_chart = {"Dimension": list(dim_avg.keys()), "Score": list(dim_avg.values())}
         st.bar_chart(dim_chart, x="Dimension", y="Score", height=220)
 
@@ -1035,17 +1034,17 @@ def build_session_snapshot(turns: list[dict], evidence: dict | None, categories:
 
 
 def render_session_snapshot(snapshot: dict):
-    st.markdown('<div id="session-insights"></div><h3>📊</h3>', unsafe_allow_html=True)
+    st.markdown('<div id="session-insights"></div><h3>Session insights</h3>', unsafe_allow_html=True)
     cols = st.columns(5)
-    cols[0].metric("🎯 Interview", f"{snapshot['overall']}/100")
-    cols[1].metric("🧾 ATS", f"{snapshot['ats_readiness']}/100")
-    cols[2].metric("❓ Questions", snapshot["questions_completed"])
-    cols[3].metric("🧩 Coverage", snapshot["category_coverage"])
-    cols[4].metric("🔎 Focus", snapshot["weakest_dimension"])
+    cols[0].metric("Interview", f"{snapshot['overall']}/100")
+    cols[1].metric("ATS readiness", f"{snapshot['ats_readiness']}/100")
+    cols[2].metric("Questions", snapshot["questions_completed"])
+    cols[3].metric("Category coverage", snapshot["category_coverage"])
+    cols[4].metric("Focus area", snapshot["weakest_dimension"])
     status = "REPORT READY" if snapshot["report_ready"] else "REPORT IN PROGRESS"
     st.markdown(f"<div class='uhd-card' style='padding:13px 16px;margin:8px 0 18px'><span class='uhd-pill live'><span class='uhd-pulse'></span>{status}</span><span class='small' style='margin-left:10px'>Health: {escape(snapshot.get('session_health','READY'))} · Completeness: {snapshot.get('report_completeness',0)}% · Engine: {escape(snapshot.get('model','Automatic model discovery'))}</span></div>", unsafe_allow_html=True)
     if snapshot.get("weakest_dimension") and snapshot.get("questions_completed"):
-        st.markdown(f"<div class='ix-priority'>💡 <b>Coaching priority:</b> strengthen <b>{escape(snapshot['weakest_dimension'])}</b> in the next practice cycle. This priority is derived from the lowest completed evaluation dimension.</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='ix-priority'><b>Coaching priority:</b> strengthen <b>{escape(snapshot['weakest_dimension'])}</b> in the next practice cycle. This priority is derived from the lowest completed evaluation dimension.</div>", unsafe_allow_html=True)
 
 
 
@@ -1061,7 +1060,7 @@ DEFAULT_SESSION_STATE = {
     "started_at": None,
     "session_duration": 30,
     "question_mode": "Text Questions",
-    "answer_mode": "⌨️ Type Answers",
+    "answer_mode": "Type Answers",
     "categories": CATEGORIES[:],
     "company": "",
     "company_track": "",
@@ -1134,76 +1133,62 @@ def configured_secret(name: str, default: str = "") -> str:
 
 
 with st.sidebar:
-    st.markdown("## ◈")
-    st.caption("INTERVIA AI · STUDIO")
-    api_key = st.text_input("🔐", type="password", value=configured_secret("GROQ_API_KEY"), key="api_key_input", help="Groq API key")
-    target_role = st.text_input("🎯", value="Senior Renewable Energy Engineer", disabled=st.session_state.started, key="target_role_input", help="Target role")
-    company = st.text_input("🏢", value=st.session_state.company, disabled=st.session_state.started, key="company_input", help="Company / employer (optional)")
+    st.markdown("## INTERVIA AI")
+    st.caption("INTERVIEW INTELLIGENCE STUDIO")
+    api_key = st.text_input("Groq API key", type="password", value=configured_secret("GROQ_API_KEY"), key="api_key_input", help="Groq API key")
+    target_role = st.text_input("Target role", value="Senior Renewable Energy Engineer", disabled=st.session_state.started, key="target_role_input", help="Target role")
+    company = st.text_input("Company / employer (optional)", value=st.session_state.company, disabled=st.session_state.started, key="company_input", help="Company / employer (optional)")
 
-    st.markdown("### 🎛️")
-    setup_tab, new_tab = st.tabs(["🎛️", "🆕"])
-    with setup_tab:
-        mode_map = {"🧩": "Mixed", "💻": "Technical", "🎭": "Behavioral", "📊": "Case / Situational", "🤝": "HR / Screening", "👔": "Leadership"}
-        mode_icon = st.selectbox(
-            "🎛️", list(mode_map),
-            index=list(mode_map.values()).index(st.session_state.get("mode_value", "Mixed")),
-            disabled=st.session_state.started,
-            help="Interview mode", key="mode_input"
-        )
-        mode = mode_map[mode_icon]
+    st.markdown("### Interview setup")
+    mode_map = {"Mixed": "Mixed", "Technical": "Technical", "Behavioral": "Behavioral", "Case / Situational": "Case / Situational", "HR / Screening": "HR / Screening", "Leadership": "Leadership"}
+    mode = st.selectbox(
+        "Interview mode", list(mode_map.values()),
+        index=list(mode_map.values()).index(st.session_state.get("mode_value", "Mixed")),
+        disabled=st.session_state.started,
+        help="Interview mode", key="mode_input"
+    )
 
-        category_map = {
-            "🎭": CATEGORIES[0], "💻": CATEGORIES[1], "🤝": CATEGORIES[2],
-            "👔": CATEGORIES[3], "📊": CATEGORIES[4], "🧠": CATEGORIES[5], "🔍": CATEGORIES[6],
-        }
-        reverse_category = {v: k for k, v in category_map.items()}
-        selected_category_icons = st.multiselect(
-            "🧩", list(category_map),
-            default=[reverse_category.get(c) for c in st.session_state.categories if c in reverse_category],
-            disabled=st.session_state.started,
-            help="Interview categories", key="categories_input"
-        )
-        categories = [category_map[i] for i in selected_category_icons]
+    category_map = {
+        "Behavioral & Situational": CATEGORIES[0], "Technical & Role-Specific": CATEGORIES[1],
+        "HR & Screening Basics": CATEGORIES[2], "Leadership & Management": CATEGORIES[3],
+        "Case & Analytical Interviews": CATEGORIES[4], "Competency & Skill-Based": CATEGORIES[5],
+        "Reverse Interviewing — Questions for the Employer": CATEGORIES[6],
+    }
+    selected_categories = st.multiselect(
+        "Interview categories", list(category_map),
+        default=[c for c in st.session_state.categories if c in category_map],
+        disabled=st.session_state.started, help="Interview categories", key="categories_input"
+    )
+    categories = [category_map[i] for i in selected_categories]
 
-    with new_tab:
-        st.markdown("**🆕**")
-        st.caption("Reset the active session without changing the API key or deployment.")
-        if st.session_state.started or st.session_state.turns or st.session_state.evidence:
-            st.markdown("<div class='card'><b>●</b><br><span class='small'>Active session · reset creates a fresh session ID.</span></div>", unsafe_allow_html=True)
-        else:
-            st.markdown("<div class='card'><b>○</b><br><span class='small'>Ready · no active interview.</span></div>", unsafe_allow_html=True)
-        confirm_reset = st.checkbox("✓", key="confirm_reset_input", help="Confirm clearing the current interview session")
-        if st.button("↻", type="primary", use_container_width=True, disabled=not confirm_reset, key="reset_sidebar_button", help="Reset & start a new interview"):
-            reset_interview_session()
-            st.rerun()
-
-    duration_options = {"◴ 30′": 30, "◷ 60′": 60, "◶ 120′": 120, "◵ 180′": 180}
-    current_duration_icon = next((k for k, v in duration_options.items() if v == st.session_state.session_duration), "◴ 30′")
-    duration_icon = st.selectbox("⏱️", list(duration_options), index=list(duration_options).index(current_duration_icon), disabled=st.session_state.started, key="duration_input", help="Session duration")
-    duration_minutes = duration_options[duration_icon]
+    st.markdown("### Session controls")
+    if st.session_state.started or st.session_state.turns or st.session_state.evidence:
+        st.markdown("<div class='card'><b>Active session</b><br><span class='small'>Reset creates a fresh session ID.</span></div>", unsafe_allow_html=True)
+    else:
+        st.markdown("<div class='card'><b>Ready</b><br><span class='small'>No active interview.</span></div>", unsafe_allow_html=True)
+    duration_options = {"30 minutes": 30, "60 minutes": 60, "120 minutes": 120, "180 minutes": 180}
+    current_duration_label = next((k for k, v in duration_options.items() if v == st.session_state.session_duration), "30 minutes")
+    duration_label_input = st.selectbox("Session duration", list(duration_options), index=list(duration_options).index(current_duration_label), disabled=st.session_state.started, key="duration_input", help="Session duration")
+    duration_minutes = duration_options[duration_label_input]
     duration_label = next(k for k, v in DURATIONS.items() if v == duration_minutes)
 
-    question_map = {"📝": "Text Questions", "🔊": "Audio Questions"}
-    question_icon = st.radio("🔊", list(question_map), index=0 if st.session_state.question_mode == "Text Questions" else 1, disabled=st.session_state.started, horizontal=True, help="Question format", key="question_mode_input")
-    question_mode = question_map[question_icon]
+    question_options = ["Text Questions", "Audio Questions"]
+    question_mode = st.radio("Question format", question_options, index=0 if st.session_state.question_mode == "Text Questions" else 1, disabled=st.session_state.started, horizontal=True, help="Question format", key="question_mode_input")
 
-    answer_map = {"⌨️": "⌨️ Type Answers", "🎙️": "🎙️ Speak Answers"}
-    answer_icon = st.radio("🎙️", list(answer_map), index=0 if st.session_state.answer_mode.startswith("⌨") else 1, disabled=st.session_state.started, horizontal=True, help="Answer format", key="answer_mode_input")
-    answer_mode = answer_map[answer_icon]
+    answer_options = ["Type Answers", "Speak Answers"]
+    answer_mode = st.radio("Answer format", answer_options, index=0 if st.session_state.answer_mode.startswith("⌨") or st.session_state.answer_mode == "Type Answers" else 1, disabled=st.session_state.started, horizontal=True, help="Answer format", key="answer_mode_input")
 
-    use_research = st.checkbox("🔎", value=False, disabled=st.session_state.started, help="Company / role analysis", key="research_input")
-    camera_enabled = st.checkbox("📷", value=st.session_state.camera_enabled, disabled=st.session_state.started, help="Camera presentation snapshot", key="camera_enabled_input")
-    language_map = {"🇺🇸": "English (US)", "🇬🇧": "English (UK)"}
-    language_icon = st.selectbox("🗣️", list(language_map), index=0 if st.session_state.get("speech_language", "English (US)") == "English (US)" else 1, disabled=st.session_state.started, key="speech_language_input", help="Question voice")
-    speech_language = language_map[language_icon]
+    use_research = st.checkbox("Research company and role", value=False, disabled=st.session_state.started, help="Company / role analysis", key="research_input")
+    camera_enabled = st.checkbox("Enable camera presentation snapshot", value=st.session_state.camera_enabled, disabled=st.session_state.started, help="Camera presentation snapshot", key="camera_enabled_input")
+    language_options = ["English (US)", "English (UK)"]
+    speech_language = st.selectbox("Question voice", language_options, index=0 if st.session_state.get("speech_language", "English (US)") == "English (US)" else 1, disabled=st.session_state.started, key="speech_language_input", help="Question voice")
     speech_locale = "en-US" if speech_language == "English (US)" else "en-GB"
 
-    length_map = {"⚡": "Short", "◼️": "Standard", "🧠": "Detailed"}
-    length_icon = st.selectbox("📝", list(length_map), index=list(length_map.values()).index(st.session_state.get("answer_length", "Standard")), disabled=st.session_state.started, key="answer_length_input", help="AI practice-answer length")
-    answer_length = length_map[length_icon]
+    length_options = ["Short", "Standard", "Detailed"]
+    answer_length = st.selectbox("AI practice-answer length", length_options, index=length_options.index(st.session_state.get("answer_length", "Standard")), disabled=st.session_state.started, key="answer_length_input", help="AI practice-answer length")
 
     st.divider()
-    st.caption("🔒 Secrets stay in Streamlit Secrets · ⚙️ Session controls lock after start.")
+    st.caption("Secrets stay in Streamlit Secrets. Session controls lock after the interview starts.")
 
     if not st.session_state.started:
         st.session_state.session_duration = duration_minutes
@@ -1221,7 +1206,7 @@ st.markdown(
     """
     <div class="hero">
       <div class="eyebrow">Intervia AI · Interview Intelligence Platform · Intervia Studio · Ultra HD Cockpit</div>
-      <h1>◈</h1>
+      <h1>Intervia AI</h1>
       <div class="muted">Choose question and answer modalities once, select a session length and interview categories, then Intervia Studio automatically adapts the Q&A pace to the remaining time.</div>
     </div>
     """,
@@ -1235,14 +1220,14 @@ render_session_telemetry(st.session_state.evidence, st.session_state.turns, st.s
 status_col, reset_col = st.columns([4, 1])
 with status_col:
     if st.session_state.get("reset_notice"):
-        st.success("✨ New interview session is ready. Your previous session state has been cleared.")
+        st.success("New interview session is ready. Your previous session state has been cleared.")
         st.session_state.reset_notice = False
     elif st.session_state.started:
         st.info("Interview session active · use **New Interview Session** when you want a clean reset.")
     else:
         st.caption("Session workspace ready · your API key is preserved when you start a new interview.")
 with reset_col:
-    if st.button("↻", use_container_width=True, key="reset_dashboard_button", help="New Interview — clear the current session and return to a fresh workspace."):
+    if st.button("New interview session", use_container_width=True, key="reset_dashboard_button", help="New Interview — clear the current session and return to a fresh workspace."):
         reset_interview_session()
         st.rerun()
 
@@ -1251,13 +1236,13 @@ if not st.session_state.started:
 
 left, right = st.columns([1.35, 1])
 with left:
-    st.markdown('<div id="evidence-lab"></div><h3>🧬</h3>', unsafe_allow_html=True)
+    st.markdown('<div id="evidence-lab"></div><h3>Candidate evidence</h3>', unsafe_allow_html=True)
     cv_file = st.file_uploader("CV / Resume", type=["pdf", "docx", "txt"], key="cv")
     jd_file = st.file_uploader("Job Description", type=["pdf", "docx", "txt"], key="jd")
     jd_text = st.text_area("Or paste the job description", height=150, placeholder="Paste the JD here if you do not have a file.", key="jd_text_input")
     company_track = st.text_area("Optional company-specific question context", height=90, placeholder="Paste publicly sourced interview themes/questions or a company-specific question bank here. Keep it factual and non-confidential.", disabled=st.session_state.started, key="company_track_input")
 
-    if st.button("🧬", type="primary", use_container_width=True, disabled=st.session_state.started):
+    if st.button("Build candidate evidence", type="primary", use_container_width=True, disabled=st.session_state.started):
         if not api_key:
             st.error("Enter a Groq API key first.")
         elif not cv_file:
@@ -1293,7 +1278,7 @@ with left:
             st.success("Evidence pack created. Candidate evidence, JD requirements and role analysis remain separate.")
 
 with right:
-    st.markdown("### 🤖")
+    st.markdown("### AI agents")
     for name, status in [
         ("Evidence Intelligence", "READY" if st.session_state.evidence else "WAITING"),
         ("Career & Market Research", "READY" if st.session_state.research else ("OPTIONAL" if not use_research else "WAITING")),
@@ -1302,14 +1287,14 @@ with right:
         ("Performance Coach", "READY"),
     ]:
         st.markdown(f'<div class="agent"><span>{name}</span><span class="status">{status}</span></div>', unsafe_allow_html=True)
-    st.markdown("### ⚙️")
+    st.markdown("### Session configuration")
     model_label = st.session_state.get("groq_model") or "Automatic model discovery"
     st.markdown(f"<div class='card'><b>{duration_label}</b><br><span class='small'>Mode: {escape(mode)} · Categories: {len(categories or CATEGORIES)}</span><br><span class='small'>Questions: {escape(question_mode)} · Answers: {escape(answer_mode)}</span><br><span class='small'>Groq model: {escape(model_label)}</span><br><span class='small'>Target pacing: approximately {TARGET_QUESTIONS[duration_minutes]} core questions, automatically adjusted for answer speed and remaining time.</span></div>", unsafe_allow_html=True)
 
 if st.session_state.evidence:
     ev = st.session_state.evidence
     ats = ev.get("ats_readiness", {})
-    st.markdown("### 🧠")
+    st.markdown("### ATS readiness")
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("ATS Readiness", f"{ats.get('score', 0)}/100")
     c2.metric("JD Keyword Match", f"{ats.get('keyword_match_score', 0)}/100")
@@ -1325,16 +1310,16 @@ if st.session_state.evidence:
     )
     ev_left, ev_right = st.columns(2)
     with ev_left:
-        st.markdown("**🟢**")
+        st.markdown("**Detected skills**")
         for item in ats.get("strengths", [])[:6]:
             st.markdown(f"• {escape(item)}")
-        st.markdown("**🔤**")
+        st.markdown("**Detected headings**")
         st.caption(", ".join(ats.get("detected_headings", [])) or "No conventional headings detected")
     with ev_right:
-        st.markdown("**💡**")
+        st.markdown("**Recommendations**")
         for item in ats.get("improvements", [])[:6]:
             st.markdown(f"• {escape(item)}")
-        st.markdown("**🔎**")
+        st.markdown("**Missing keywords**")
         st.caption(", ".join(ats.get("missing_keywords", [])[:30]) or "No major keyword gaps detected")
     with st.expander("View complete grounding data"):
         st.write("**Candidate evidence**", ev.get("candidate_facts", []))
@@ -1344,11 +1329,11 @@ if st.session_state.evidence:
         st.write("**ATS matched keywords**", ats.get("matched_keywords", []))
 
     if not st.session_state.started:
-        if st.button("🚀", type="primary", use_container_width=True, key="start_interview_button", help="Start the interview session"): 
+        if st.button("Start interview", type="primary", use_container_width=True, key="start_interview_button", help="Start the interview session"): 
             if not categories:
-                st.error("🧩 Select at least one category.")
+                st.error("Select at least one category.")
             elif not api_key:
-                st.error("🔐 Groq API key is required.")
+                st.error("Groq API key is required.")
             else:
                 now = time.time()
                 try:
@@ -1397,7 +1382,7 @@ if st.session_state.evidence:
 
 if st.session_state.started and st.session_state.question:
     st.markdown("---")
-    st.markdown('<div id="live-studio"></div><h3>🎙️</h3>', unsafe_allow_html=True)
+    st.markdown('<div id="live-studio"></div><h3>Live interview</h3>', unsafe_allow_html=True)
     elapsed, remaining, expired = duration_state(st.session_state.started_at, st.session_state.session_duration)
     turn_no = len(st.session_state.turns) + 1
     target_count = question_target(st.session_state.session_duration, elapsed, len(st.session_state.turns))
@@ -1411,13 +1396,13 @@ if st.session_state.started and st.session_state.question:
         render_timer(st.session_state.started_at, st.session_state.session_duration)
 
     if expired:
-        st.warning("⏱️ Your selected practice session time has ended. Your report is ready below.")
+        st.warning("Your selected practice session time has ended. Your report is ready below.")
         st.session_state.question = None
     else:
         if st.session_state.get("degraded_mode"):
-            st.warning("⚠️ ENGINE FALLBACK · The session is active with a local role-grounded question. Live AI coaching will resume when Groq is available.")
+            st.warning("ENGINE FALLBACK · The session is active with a local role-grounded question. Live AI coaching will resume when Groq is available.")
         else:
-            st.success("🟢 ENGINE LIVE · Adaptive question generated successfully.")
+            st.success("ENGINE LIVE · Adaptive question generated successfully.")
 
         q_obj = st.session_state.question if isinstance(st.session_state.question, dict) else {"category": "General", "question": str(st.session_state.question)}
         question_text = q_obj["question"].strip()
@@ -1434,18 +1419,18 @@ if st.session_state.started and st.session_state.question:
         if st.session_state.question_mode == "Audio Questions":
             st.caption("Audio mode: the question is spoken automatically when available; playback stops automatically when the question finishes. Browser autoplay restrictions may require pressing Play once.")
 
-        st.markdown("#### ✍️")
-        st.caption(f"Answer mode locked for this session: **{st.session_state.answer_mode}**")
-        if st.session_state.answer_mode == "🎙️ Speak Answers":
+        st.markdown("#### Your answer")
+        st.caption(f"Answer mode locked for this session: **{answer_mode}**")
+        if st.session_state.answer_mode in ("🎙️ Speak Answers", "Speak Answers"):
             render_ultra_waveform()
             st.caption("Live audio visualization · transcription and coaching are generated after submission.")
         answer = ""
         voice_transcript = ""
         audio = None
-        if st.session_state.answer_mode == "⌨️ Type Answers":
+        if st.session_state.answer_mode in ("⌨️ Type Answers", "Type Answers"):
             answer = st.text_area("Type your answer", key=f"answer_input_{turn_no}", height=190, placeholder="Answer as if you were in the real interview.")
         else:
-            audio = st.audio_input("🎙️ Record your answer", sample_rate=16000, key=f"answer_audio_{turn_no}")
+            audio = st.audio_input("Record your answer", sample_rate=16000, key=f"answer_audio_{turn_no}")
             st.caption("Speak naturally. Submit the recording when you finish; Whisper will transcribe it before coaching.")
 
         camera = None
@@ -1453,7 +1438,7 @@ if st.session_state.started and st.session_state.question:
             camera = st.camera_input("Optional camera snapshot for presentation-cue feedback", key=f"camera_{turn_no}")
             st.caption("MVP camera analysis is a snapshot, not continuous video. It evaluates only observable framing/posture/camera cues; it does not infer emotions, personality, health or mental state.")
 
-        submit = st.button("🚀", type="primary", use_container_width=True)
+        submit = st.button("Submit answer", type="primary", use_container_width=True)
         if submit:
             elapsed_now, remaining_now, expired_now = duration_state(st.session_state.started_at, st.session_state.session_duration)
             if expired_now:
@@ -1464,7 +1449,7 @@ if st.session_state.started and st.session_state.question:
                 st.error("Groq API key is required.")
             else:
                 gateway = GroqGateway(api_key)
-                if st.session_state.answer_mode == "🎙️ Speak Answers" and audio is not None:
+                if st.session_state.answer_mode in ("🎙️ Speak Answers", "Speak Answers") and audio is not None:
                     try:
                         voice_transcript = gateway.transcribe(audio.getvalue(), getattr(audio, "name", "answer.wav")).strip()
                         answer = voice_transcript
@@ -1542,7 +1527,7 @@ if st.session_state.started and st.session_state.question:
 
     if st.session_state.turns:
         latest = st.session_state.turns[-1]["feedback"]
-        st.markdown('<div id="live-coaching"></div><h3>🧠</h3>', unsafe_allow_html=True)
+        st.markdown('<div id="live-coaching"></div><h3>Live coaching</h3>', unsafe_allow_html=True)
         cols = st.columns(6)
         for col, key, label in zip(cols, ["technical", "relevance", "evidence", "communication", "structure", "confidence"], ["Technical", "Relevance", "Evidence", "Communication", "Structure", "Confidence"]):
             col.metric(label, latest.get("scores", {}).get(key, 0))
@@ -1566,7 +1551,7 @@ if st.session_state.started and st.session_state.question:
 
         render_speech_analytics(st.session_state.turns)
 
-        st.markdown("### 🧩")
+        st.markdown("### Category readiness")
         category_scores = defaultdict(list)
         for t in st.session_state.turns:
             category_scores[t.get("category", "General")].append(t.get("feedback", {}).get("overall", 0))
@@ -1577,10 +1562,10 @@ if st.session_state.started and st.session_state.question:
         snapshot = build_session_snapshot(st.session_state.turns, st.session_state.evidence, st.session_state.categories, st.session_state.get("groq_model", ""))
         render_session_snapshot(snapshot)
         render_quality_insights(st.session_state.turns)
-        st.markdown("#### 🗺️")
+        st.markdown("#### Improvement roadmap")
         render_question_map(st.session_state.turns)
 
-        st.markdown('<div id="session-report"></div><h3>📑</h3>', unsafe_allow_html=True)
+        st.markdown('<div id="session-report"></div><h3>Session report</h3>', unsafe_allow_html=True)
         report_kwargs = dict(
             session_snapshot=snapshot,
             target_role=target_role,
@@ -1607,8 +1592,8 @@ if st.session_state.started and st.session_state.question:
         )
         md = build_markdown_report(**report_kwargs)
         pdf = build_pdf_report(**report_kwargs)
-        st.download_button("⬇️", md, file_name="intervia_report.md", mime="text/markdown")
-        st.download_button("📑", pdf, file_name="intervia_report.pdf", mime="application/pdf")
+        st.download_button("Download Markdown report", md, file_name="intervia_report.md", mime="text/markdown")
+        st.download_button("Download PDF report", pdf, file_name="intervia_report.pdf", mime="application/pdf")
 
 
 st.markdown(
