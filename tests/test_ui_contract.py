@@ -90,7 +90,7 @@ def test_snapshot_extended_analytics_contract():
 
 def test_requested_streamlit_theme_contract():
     config = (ROOT / ".streamlit" / "config.toml").read_text(encoding="utf-8")
-    for token in ['base = "dark"', 'primaryColor = "#67E8F9"', 'backgroundColor = "#060A12"', 'secondaryBackgroundColor = "#0B1220"', 'textColor = "#F1F5F9"', 'font = "sans serif"']:
+    for token in ['base = "dark"', 'primaryColor = "#22D3EE"', 'backgroundColor = "#030A16"', 'secondaryBackgroundColor = "#061B34"', 'textColor = "#F4F8FF"', 'font = "sans serif"']:
         assert token in config
 
 def test_start_interview_cannot_leave_blank_question_contract():
